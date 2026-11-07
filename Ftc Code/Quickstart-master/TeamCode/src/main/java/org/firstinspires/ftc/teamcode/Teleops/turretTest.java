@@ -40,6 +40,11 @@ public class turretTest extends OpMode {
         telemetry.addData("Robot X", robotPose.x());
         telemetry.addData("Robot Y", robotPose.y());
         telemetry.addData("Robot Heading", Math.toDegrees(robotPose.heading()));
+        telemetry.update();
+
+        if (true == gamepad1.right_trigger_pressed){
+            aimToObject(72, 72);
+        }
     }
 
     public double scalingFactor = 4.10735294445;
@@ -56,7 +61,7 @@ public class turretTest extends OpMode {
         double currentPosition = turretMotor.getCurrentPosition();
         double TARGET_TICK_VALUE = angleToEncoderTicks(degrees) + currentPosition;
 
-        turretMotor.setTargetPosition(TARGET_TICK_VALUE);
+        turretMotor.setTargetPosition((int) TARGET_TICK_VALUE);
         turretMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         turretMotor.setPower(1);
         return currentPosition;
@@ -64,10 +69,10 @@ public class turretTest extends OpMode {
 
 
     // you would call aimtoobject when you want the turret to move.
-    public void aimToObject(){
+    public void aimToObject(int objectX, int objectY){
         double robotYPosition = robotPose.y(), robotXPosition = robotPose.x();
-        double destinationAngle = Math.atan2(72 - robotYPosition,
-                72 - robotXPosition);
+        double destinationAngle = Math.atan2(objectY - robotYPosition,
+                objectX - robotXPosition);
 
        double turretAngle = encoderTicksToAngle(turretMotor.getCurrentPosition());
        double robotAngle = Math.toDegrees(robotPose.heading());
