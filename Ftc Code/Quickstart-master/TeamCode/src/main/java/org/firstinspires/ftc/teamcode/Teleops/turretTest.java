@@ -42,7 +42,7 @@ public class turretTest extends OpMode {
         telemetry.addData("Robot Heading", Math.toDegrees(robotPose.heading()));
     }
 
-    public double scalingFactor = 0.05;
+    public double scalingFactor = 4.10735294445;
 
     public double encoderTicksToAngle(int ticks){
         return (ticks*scalingFactor);
