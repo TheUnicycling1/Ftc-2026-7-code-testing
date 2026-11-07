@@ -48,15 +48,15 @@ public class turretTest extends OpMode {
         return (ticks*scalingFactor);
     }
 
-    public int angleToEncoderTicks(double degrees){
-        return (int)(degrees/scalingFactor);
+    public double angleToEncoderTicks(double degrees){
+        return (degrees/scalingFactor);
     }
 
     public double turnTurretBy(double degrees){
         double currentPosition = turretMotor.getCurrentPosition();
         double TARGET_TICK_VALUE = angleToEncoderTicks(degrees) + currentPosition;
 
-        turretMotor.setTargetPosition((int) TARGET_TICK_VALUE);
+        turretMotor.setTargetPosition(TARGET_TICK_VALUE);
         turretMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         turretMotor.setPower(1);
         return currentPosition;
@@ -69,8 +69,8 @@ public class turretTest extends OpMode {
         double destinationAngle = Math.atan2(72 - robotYPosition,
                 72 - robotXPosition);
 
-       int turretAngle = (int) encoderTicksToAngle(turretMotor.getCurrentPosition());
-       int robotAngle = (int) Math.toDegrees(robotPose.heading());
+       double turretAngle = encoderTicksToAngle(turretMotor.getCurrentPosition());
+       double robotAngle = Math.toDegrees(robotPose.heading());
 
         double toTurn = destinationAngle - (turretAngle + robotAngle);
         turnTurretBy(toTurn%360); // take the mod/remainder of toTurn/360
